@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Customer, NewCustomer } from "../types";
 import { addCustomer, deleteCustomer, getCustomers, updateCustomer } from "../api";
+import { exportCustomersCSV } from "../csvExport";
 
 export default function Customers() {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -94,6 +95,11 @@ export default function Customers() {
         <div>
             <h1>Customers</h1>
             
+            {/* CSV EXPORT */}
+            <button onClick={() => exportCustomersCSV(sorted)}>
+                Export CSV
+            </button>
+
             {/* ADD FORM */}
             <form onSubmit={handlesubmit}>
                 <input

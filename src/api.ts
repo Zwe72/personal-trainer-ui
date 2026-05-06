@@ -79,3 +79,20 @@ export const updateCustomer = async (url: string, customer: NewCustomer) => {
     throw new Error("Failed to update customer");
   }
 };
+
+export const updateTraining = async (training: Training) => {
+  if (!training._links?.self.href) return;
+
+  await fetch(training._links.self.href, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      activity: training.activity,
+      date: training.date,
+      duration: training.duration,
+      customer: training._links.self.href,
+    }),
+  });
+};

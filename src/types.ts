@@ -16,7 +16,7 @@ export interface Training {
     duration: number;
 
     customer: {
-        fistname: string;
+        firstname: string;
         lastname: string;
     };
 

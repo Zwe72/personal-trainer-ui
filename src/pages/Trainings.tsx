@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Customer, NewTraining, Training } from "../types";
 import { addTraining, deleteTraining, getCustomers, getTrainings } from "../api";
 import dayjs from "dayjs";
+import { exportTrainingsCSV } from "../csvExport";
 
 export default function Trainings() {
     const [trainings, setTrainings] = useState<Training[]>([]);
@@ -35,8 +36,8 @@ export default function Trainings() {
     const handleAddTraining = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!newTraining.activity || !newTraining.customer) {
-            alert("Fill all fields");
+        if (!newTraining.activity || !newTraining.customer || newTraining.duration <= 0) {
+            alert("Fill all fields and duration must be greater than 0");
             return;
         }
 
@@ -83,6 +84,14 @@ export default function Trainings() {
         <div>
             <h1>Trainings</h1>
 
+            {/* CSV EXPORT */}
+            <button onClick={() => exportTrainingsCSV(sorted)}>
+                Export CSV
+            </button>
+
+            <br />
+            <br />
+            
             {/*  ADD FORM */}
             <form onSubmit={handleAddTraining}>
                 <input
@@ -169,7 +178,9 @@ export default function Trainings() {
                             <td>{t.duration} min</td>
 
                             <td>
-                                {t.customer.fistname} {t.customer.lastname}
+                                {t.customer
+                                ? `${t.customer.firstname} ${t.customer.lastname}`
+                                : ""}
                             </td>
 
                             <td>
