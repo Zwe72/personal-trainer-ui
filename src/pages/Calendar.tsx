@@ -35,6 +35,7 @@ export default function CalendarPage() {
         <h1 style={{ marginBottom: "20px" }}>PersonalTrainer</h1>
 
         <div style={{ height: "80vh", background: "white", padding: "10px" }}>
+            {/* CALENDAR */}
             <Calendar
             localizer={localizer}
             events={events}
